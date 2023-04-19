@@ -1,0 +1,53 @@
+#Required snmpget.exe in C:\usr\bin\ You can download this from https://ezfive.com/snmpsoft-tools/snmp-get/
+
+$excel = Open-ExcelPackage -Path "" #Complete with excel file location (ex. C:\liczniki\Raport_licznikow_z_drukarek.xlsx)
+
+$excel.raport.Cells["A1"].Value = (Get-Date -Format dd.MM.yyyy)
+
+$printer1 = "" #complete with IP of Konica Minolta printer (ex. 192.168.0.0) 
+$printer2 = "" #complete with IP of Konica Minolta printer (ex. 192.168.0.0) 
+$printer3 = "" #complete with IP of Konica Minolta printer (ex. 192.168.0.0) 
+
+$total = (C:\usr\bin\snmpget.exe -v 1 -c public -O v $printer3 .1.3.6.1.4.1.18334.1.1.1.5.7.2.1.1.0)
+$excel.raport.Cells["B3"].Value = ([int]($total.Substring($total.indexof(":")+2)))
+$copy_black = (C:\usr\bin\snmpget.exe -v 1 -c public -O v $printer3 .1.3.6.1.4.1.18334.1.1.1.5.7.2.2.1.5.1.1)
+$print_black = (C:\usr\bin\snmpget.exe -v 1 -c public -O v $printer3 .1.3.6.1.4.1.18334.1.1.1.5.7.2.2.1.5.1.2)
+$excel.raport.Cells["B4"].Value = ([int]($copy_black.Substring($copy_black.indexof(":")+2)) + [int]($print_black.Substring($print_black.indexof(":")+2)))
+$copy_color = (C:\usr\bin\snmpget.exe -v 1 -c public -O v $printer3 .1.3.6.1.4.1.18334.1.1.1.5.7.2.2.1.5.2.1)
+$print_color = (C:\usr\bin\snmpget.exe -v 1 -c public -O v $printer3 .1.3.6.1.4.1.18334.1.1.1.5.7.2.2.1.5.2.2)
+$copy_single = (C:\usr\bin\snmpget.exe -v 1 -c public -O v $printer3 .1.3.6.1.4.1.18334.1.1.1.5.7.2.2.1.5.3.1)
+$copy_two = (C:\usr\bin\snmpget.exe -v 1 -c public -O v $printer3 .1.3.6.1.4.1.18334.1.1.1.5.7.2.2.1.5.4.1)
+$print_single = (C:\usr\bin\snmpget.exe -v 1 -c public -O v $printer3 .1.3.6.1.4.1.18334.1.1.1.5.7.2.2.1.5.4.2)
+$excel.raport.Cells["B5"].Value = ([int]($copy_color.Substring($copy_color.indexof(":")+2)) + [int]($print_color.Substring($print_color.indexof(":")+2)) + [int]($copy_single.Substring($copy_single.indexof(":")+2)) + [int]($copy_two.Substring($copy_two.indexof(":")+2)) + [int]($print_single.Substring($print_single.indexof(":")+2)))
+$scans = (C:\usr\bin\snmpget.exe -v 1 -c public -O v $printer3 .1.3.6.1.4.1.18334.1.1.1.5.7.2.1.5.0)
+$excel.raport.Cells["B6"].Value = ([int]$scans.Substring($scans.indexof(":")+2))
+
+$total = (C:\usr\bin\snmpget.exe -v 1 -c public -O v $printer2 .1.3.6.1.4.1.18334.1.1.1.5.7.2.1.1.0)
+$excel.raport.Cells["C3"].Value = ([int]($total.Substring($total.indexof(":")+2)))
+$copy_black = (C:\usr\bin\snmpget.exe -v 1 -c public -O v $printer2 .1.3.6.1.4.1.18334.1.1.1.5.7.2.2.1.5.1.1)
+$print_black = (C:\usr\bin\snmpget.exe -v 1 -c public -O v $printer2 .1.3.6.1.4.1.18334.1.1.1.5.7.2.2.1.5.1.2)
+$excel.raport.Cells["C4"].Value = ([int]($copy_black.Substring($copy_black.indexof(":")+2)) + [int]($print_black.Substring($print_black.indexof(":")+2)))
+$copy_color = (C:\usr\bin\snmpget.exe -v 1 -c public -O v $printer2 .1.3.6.1.4.1.18334.1.1.1.5.7.2.2.1.5.2.1)
+$print_color = (C:\usr\bin\snmpget.exe -v 1 -c public -O v $printer2 .1.3.6.1.4.1.18334.1.1.1.5.7.2.2.1.5.2.2)
+$copy_single = (C:\usr\bin\snmpget.exe -v 1 -c public -O v $printer2 .1.3.6.1.4.1.18334.1.1.1.5.7.2.2.1.5.3.1)
+$copy_two = (C:\usr\bin\snmpget.exe -v 1 -c public -O v $printer2 .1.3.6.1.4.1.18334.1.1.1.5.7.2.2.1.5.4.1)
+$print_single = (C:\usr\bin\snmpget.exe -v 1 -c public -O v $printer2 .1.3.6.1.4.1.18334.1.1.1.5.7.2.2.1.5.4.2)
+$excel.raport.Cells["C5"].Value = ([int]($copy_color.Substring($copy_color.indexof(":")+2)) + [int]($print_color.Substring($print_color.indexof(":")+2)) + [int]($copy_single.Substring($copy_single.indexof(":")+2)) + [int]($copy_two.Substring($copy_two.indexof(":")+2)) + [int]($print_single.Substring($print_single.indexof(":")+2)))
+$scans = (C:\usr\bin\snmpget.exe -v 1 -c public -O v $printer2 .1.3.6.1.4.1.18334.1.1.1.5.7.2.1.5.0)
+$excel.raport.Cells["C6"].Value = ([int]$scans.Substring($scans.indexof(":")+2))
+
+$total = (C:\usr\bin\snmpget.exe -v 1 -c public -O v $printer1 .1.3.6.1.4.1.18334.1.1.1.5.7.2.1.1.0)
+$excel.raport.Cells["D3"].Value = ([int]($total.Substring($total.indexof(":")+2)))
+$copy_black = (C:\usr\bin\snmpget.exe -v 1 -c public -O v $printer1 .1.3.6.1.4.1.18334.1.1.1.5.7.2.2.1.5.1.1)
+$print_black = (C:\usr\bin\snmpget.exe -v 1 -c public -O v $printer1 .1.3.6.1.4.1.18334.1.1.1.5.7.2.2.1.5.1.2)
+$excel.raport.Cells["D4"].Value = ([int]($copy_black.Substring($copy_black.indexof(":")+2)) + [int]($print_black.Substring($print_black.indexof(":")+2)))
+$copy_color = (C:\usr\bin\snmpget.exe -v 1 -c public -O v $printer1 .1.3.6.1.4.1.18334.1.1.1.5.7.2.2.1.5.2.1)
+$print_color = (C:\usr\bin\snmpget.exe -v 1 -c public -O v $printer1 .1.3.6.1.4.1.18334.1.1.1.5.7.2.2.1.5.2.2)
+$copy_single = (C:\usr\bin\snmpget.exe -v 1 -c public -O v $printer1 .1.3.6.1.4.1.18334.1.1.1.5.7.2.2.1.5.3.1)
+$copy_two = (C:\usr\bin\snmpget.exe -v 1 -c public -O v $printer1 .1.3.6.1.4.1.18334.1.1.1.5.7.2.2.1.5.4.1)
+$print_single = (C:\usr\bin\snmpget.exe -v 1 -c public -O v $printer1 .1.3.6.1.4.1.18334.1.1.1.5.7.2.2.1.5.4.2)
+$excel.raport.Cells["D5"].Value = ([int]($copy_color.Substring($copy_color.indexof(":")+2)) + [int]($print_color.Substring($print_color.indexof(":")+2)) + [int]($copy_single.Substring($copy_single.indexof(":")+2)) + [int]($copy_two.Substring($copy_two.indexof(":")+2)) + [int]($print_single.Substring($print_single.indexof(":")+2)))
+$scans = (C:\usr\bin\snmpget.exe -v 1 -c public -O v $printer1 .1.3.6.1.4.1.18334.1.1.1.5.7.2.1.5.0)
+$excel.raport.Cells["D6"].Value = ([int]$scans.Substring($scans.indexof(":")+2))
+
+Close-ExcelPackage -ExcelPackage $excel
