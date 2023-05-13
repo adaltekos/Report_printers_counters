@@ -1,4 +1,4 @@
-# Report_printers_counters
+# Report printers counters
 
 ## Description
 This PowerShell script extracts the number of printed pages and scans from Konica Minolta printers using SNMP protocol and saves the data to an Excel file. The script is prepared to work with three printers.
